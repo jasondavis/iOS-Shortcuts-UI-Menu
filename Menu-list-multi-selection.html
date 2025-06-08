@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Multi-Select Nested Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 8px 0; }
+    .category { font-weight: bold; cursor: pointer; }
+    .item {
+      margin-left: 20px;
+      cursor: pointer;
+      color: darkblue;
+      padding: 5px;
+      border-radius: 5px;
+    }
+    .item.selected {
+      background-color: #d0ebff;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Select Multiple Items</h2>
+  <div id="menu"></div>
+  <button onclick="submitSelection()">Submit</button>
+
+  <script>
+    const data = {
+      "Fruits": ["Apple", "Banana", "Cherry"],
+      "Vegetables": ["Carrot", "Spinach", "Broccoli"],
+      "Grains": {
+        "Whole": ["Quinoa", "Brown Rice"],
+        "Refined": ["White Rice", "Pasta"]
+      }
+    };
+
+    const selectedItems = new Set();
+    const container = document.getElementById('menu');
+
+    function renderList(obj, parent) {
+      const ul = document.createElement('ul');
+      for (let key in obj) {
+        const li = document.createElement('li');
+        if (Array.isArray(obj[key])) {
+          li.className = 'category';
+          li.innerText = key;
+          const innerUl = document.createElement('ul');
+          obj[key].forEach(item => {
+            const itemLi = document.createElement('li');
+            itemLi.className = 'item';
+            itemLi.innerText = item;
+            itemLi.onclick = () => toggleSelection(itemLi, item);
+            innerUl.appendChild(itemLi);
+          });
+          li.appendChild(innerUl);
+        } else {
+          li.className = 'category';
+          li.innerText = key;
+          li.appendChild(renderList(obj[key], li));
+        }
+        ul.appendChild(li);
+      }
+      return ul;
+    }
+
+    function toggleSelection(el, value) {
+      if (selectedItems.has(value)) {
+        selectedItems.delete(value);
+        el.classList.remove('selected');
+      } else {
+        selectedItems.add(value);
+        el.classList.add('selected');
+      }
+    }
+
+    function submitSelection() {
+      const result = Array.from(selectedItems).join(',');
+      const url = `scriptable:///run?scriptName=Handle%20Selection&input=${encodeURIComponent(result)}`;
+      location.href = url;
+    }
+
+    container.appendChild(renderList(data));
+  </script>
+</body>
+</html>
