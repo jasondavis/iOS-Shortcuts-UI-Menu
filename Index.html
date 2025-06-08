@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Menu Picker</title></head>
+<body>
+  <h2>Choose an item</h2>
+  <select id="menu"></select>
+  <button onclick="sendSelection()">Submit</button>
+
+  <script>
+    const data = {
+      "Fruits": ["Apple", "Banana", "Cherry"],
+      "Vegetables": ["Carrot", "Broccoli", "Spinach"]
+    };
+
+    const sel = document.getElementById('menu');
+    Object.entries(data).forEach(([section, items]) => {
+      const og = document.createElement('optgroup');
+      og.label = section;
+      items.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.text = item;
+        og.appendChild(opt);
+      });
+      sel.appendChild(og);
+    });
+
+    function sendSelection() {
+      const selected = sel.value;
+      const url = `shortcuts://run-shortcut?name=Handle%20Selection&input=${encodeURIComponent(selected)}`;
+      window.location.href = url;
+    }
+  </script>
+</body>
+</html>
