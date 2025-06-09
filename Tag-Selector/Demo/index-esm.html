@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tag Picker Demo (ESM)</title>
+  <script type="module">
+    import TagPicker from '../src/tag-picker.esm.js';
+
+    const tags = [
+      { id: 1, name: "Angular" }, { id: 2, name: "Vue" }
+    ];
+    const sets = {
+      Frontend: ["Angular", "Vue"]
+    };
+
+    TagPicker.init("#tagSelector", tags, sets, {});
+  </script>
+</head>
+<body>
+  <h2>Tag Picker (ESM)</h2>
+  <div id="tagSelector"></div>
+</body>
+</html>
