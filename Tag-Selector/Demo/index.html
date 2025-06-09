@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tag Picker Demo (UMD)</title>
+</head>
+<body>
+  <h2>Tag Picker (UMD)</h2>
+  <div id="tagSelector"></div>
+  <script src="../dist/tag-picker.umd.js"></script>
+  <script>
+    const tags = [
+      { id: 1, name: "Angular" }, { id: 2, name: "Vue" }
+    ];
+    const sets = {
+      Frontend: ["Angular", "Vue"]
+    };
+    TagPicker.init("#tagSelector", tags, sets, {});
+  </script>
+</body>
+</html>
