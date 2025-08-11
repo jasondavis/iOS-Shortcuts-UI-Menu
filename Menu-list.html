@@ -42,7 +42,7 @@
             itemLi.innerText = item;
             itemLi.onclick = () => {
               const result = encodeURIComponent(item);
-              location.href = `scriptable:///run?scriptName=Handle%20Selection&input=${result}`;
+              location.href = `scriptable:///run?scriptName=Launch-Menu-Web-App&input=${result}`;
             };
             innerUl.appendChild(itemLi);
           });
